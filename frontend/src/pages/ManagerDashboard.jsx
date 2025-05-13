@@ -418,28 +418,6 @@ const ManagerDashboard = () => {
     }
   };
 
-  // // Booking functions
-  // const fetchBookings = async (id) => {
-  //   if (bookingOpen[id]) {
-  //     setBookingOpen(prev => ({ ...prev, [id]: false }));
-  //     setSelectedBookingRestaurant(null);
-  //     return;
-  //   }
-
-  //   setLoadingBookingId(id);
-  //   try {
-  //     const res = await axios.get(`/restaurant/bookings/${id}`);
-  //     setBookings(prev => ({ ...prev, [id]: res.data }));
-  //     setBookingOpen(prev => ({ ...prev, [id]: true }));
-  //     setSelectedBookingRestaurant(id);
-  //   } catch (err) {
-  //     console.error('Error fetching bookings:', err);
-  //     showNotification('Error loading bookings. Please try again.', 'error');
-  //   } finally {
-  //     setLoadingBookingId(null);
-  //   }
-  // };
-
   const fetchStats = async (id) => {
     if (statsOpen[id]) {
       setStatsOpen(prev => ({ ...prev, [id]: false }));

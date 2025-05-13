@@ -3,7 +3,7 @@ const Restaurant = require('../models/Restaurant');
 const Booking = require('../models/Booking');
 const sendEmail = require('../utils/sendEmail');
 const { createNotification } = require('../utils/notificationUtil');
-
+const mongoose = require('mongoose');
 
 exports.searchRestaurants = async (req, res) => {
   try {
@@ -515,24 +515,193 @@ exports.deleteReview = async (req, res) => {
   }
 };
 
+// exports.updateBooking = async (req, res) => {
+//   const bookingId = req.params.id;
+//   const { date, time, numPeople } = req.body;
+//   if (!date || !time || !numPeople) {
+//     return res.status(400).json({ message: 'All fields are required' });
+//   }
+
+//   try {
+//     // Find the booking with populated restaurant data
+//     const booking = await Booking.findOne({ 
+//       _id: bookingId, 
+//       user: req.user.userId,
+//       status: 'Booked'
+//     }).populate('restaurant');
+    
+//     if (!booking) return res.status(404).json({ message: 'Booking not found' });
+
+//     const restaurant = booking.restaurant;
+    
+//     // Calculate tables needed for the updated booking
+//     const updatedTablesNeeded = Math.ceil(numPeople / restaurant.maxPeoplePerTable);
+    
+//     // Calculate the difference in tables from previous booking
+//     const oldTablesNeeded = booking.requiredTables || Math.ceil(booking.numPeople / restaurant.maxPeoplePerTable);
+//     const tablesDifference = updatedTablesNeeded - oldTablesNeeded;
+    
+//     // Check if booking date is today
+//     const today = new Date();
+//     const bookingDate = new Date(date);
+//     const existingDate = new Date(booking.date);
+//     const isNewDateToday = bookingDate.getDate() === today.getDate() && 
+//                            bookingDate.getMonth() === today.getMonth() && 
+//                            bookingDate.getFullYear() === today.getFullYear();
+//     const wasOldDateToday = existingDate.getDate() === today.getDate() && 
+//                            existingDate.getMonth() === today.getMonth() && 
+//                            existingDate.getFullYear() === today.getFullYear();
+    
+//     // If tables needed increase for today, check availability
+//     if (tablesDifference > 0 && isNewDateToday) {
+//       // Get today's bookings to check availability
+//       const start = new Date(today); start.setHours(0, 0, 0, 0);
+//       const end = new Date(today); end.setHours(23, 59, 59, 999);
+      
+//       const bookingCounts = await Booking.aggregate([
+//         { 
+//           $match: { 
+//             restaurant: restaurant._id,
+//             date: { $gte: start, $lte: end },
+//             status: 'Booked',
+//             _id: { $ne: booking._id } // Exclude the current booking
+//           } 
+//         },
+//         {
+//           $group: { 
+//             _id: null, 
+//             tablesUsed: { 
+//               $sum: { 
+//                 $cond: [
+//                   { $gt: ["$requiredTables", 0] },
+//                   "$requiredTables",
+//                   { 
+//                     $ceil: { 
+//                       $divide: ["$numPeople", restaurant.maxPeoplePerTable] 
+//                     } 
+//                   }
+//                 ] 
+//               } 
+//             }
+//           }
+//         }
+//       ]);
+
+//       const tablesInUse = bookingCounts.length > 0 ? bookingCounts[0].tablesUsed : 0;
+      
+//       // Check if enough tables are available
+//       if (restaurant.availableTables - tablesInUse < updatedTablesNeeded) {
+//         return res.status(400).json({ 
+//           message: `Cannot update booking. Need ${updatedTablesNeeded} tables, but only ${restaurant.availableTables - tablesInUse} available.` 
+//         });
+//       }
+//     }
+
+//     // Update the booking
+//     booking.date = date;
+//     booking.time = time;
+//     booking.numPeople = numPeople;
+//     booking.requiredTables = updatedTablesNeeded;
+//     await booking.save();
+
+//     // Send email notification to the customer
+//     const subject = 'Booking Updated - Hotel Mania';
+//     const html = `
+//       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #e0e0e0; border-radius: 5px;">
+//         <h2 style="color: #2C7A7B; text-align: center;">Your Booking Has Been Updated</h2>
+//         <p>Dear ${req.user.name|| "Customer"},</p>
+//         <p>Your booking at <strong>${restaurant.name}</strong> has been successfully updated with the following details:</p>
+//         <div style="background-color: #f9f9f9; padding: 15px; border-radius: 5px; margin: 20px 0;">
+//           <p style="margin: 5px 0;"><strong>Date:</strong> ${new Date(date).toDateString()}</p>
+//           <p style="margin: 5px 0;"><strong>Time:</strong> ${time}</p>
+//           <p style="margin: 5px 0;"><strong>Party Size:</strong> ${numPeople} people</p>
+//           <p style="margin: 5px 0;"><strong>Tables Reserved:</strong> ${updatedTablesNeeded}</p>
+//         </div>
+//         <p>If you need to make any further changes to your reservation, please visit your account on Hotel Mania.</p>
+//         <p>We look forward to welcoming you at ${restaurant.name}!</p>
+//         <div style="text-align: center; margin-top: 30px; color: #718096; font-size: 14px;">
+//           <p>This is an automated message from Hotel Mania. Please do not reply to this email.</p>
+//         </div>
+//       </div>
+//     `;
+
+//     try {
+//       await sendEmail(req.user.email, subject, html);
+//       console.log(`Booking update email sent to ${req.user.email}`);
+//     } catch (emailError) {
+//       console.error('Error sending update email:', emailError);
+//       // Continue with the response even if email fails
+//     }
+
+//     // Create notification
+//     try {
+//       await createNotification(
+//         req.user.userId,
+//         'update',
+//         'Booking Updated',
+//         `Your booking at ${restaurant.name} has been updated to ${new Date(date).toDateString()} at ${time}.`,
+//         { restaurantId: restaurant._id, bookingId }
+//       );
+//     } catch (notificationError) {
+//       console.error('Error creating notification:', notificationError);
+//     }
+
+//     res.status(200).json({ 
+//       message: 'Booking updated successfully and notification sent', 
+//       booking,
+//       tablesReserved: updatedTablesNeeded
+//     });
+//   } catch (err) {
+//     console.error('Update booking error:', err);
+//     res.status(500).json({ message: 'Server error', error: err.message });
+//   }
+// };
+
+
 exports.updateBooking = async (req, res) => {
   const bookingId = req.params.id;
   const { date, time, numPeople } = req.body;
+  
+  // Validate inputs
+  if (!bookingId) {
+    return res.status(400).json({ message: 'Booking ID is required' });
+  }
+  
   if (!date || !time || !numPeople) {
     return res.status(400).json({ message: 'All fields are required' });
   }
 
   try {
-    // Find the booking with populated restaurant data
-    const booking = await Booking.findOne({ 
-      _id: bookingId, 
-      user: req.user.userId,
-      status: 'Booked'
-    }).populate('restaurant');
+    // Check if the booking ID is valid
+    // if (!mongoose.Types.ObjectId.isValid(bookingId)) {
+    //   return res.status(400).json({ message: 'Invalid booking ID format' });
+    // }
     
-    if (!booking) return res.status(404).json({ message: 'Booking not found' });
+    // Find the booking with populated restaurant data
+    // We need to check all statuses to provide better feedback
+    const booking = await Booking.findById(bookingId).populate('restaurant');
+    
+    // Handle non-existent booking
+    if (!booking) {
+      return res.status(404).json({ message: 'Booking not found' });
+    }
+    
+    // Verify booking belongs to user
+    if (booking.user.toString() !== req.user.userId) {
+      return res.status(403).json({ message: 'You do not have permission to modify this booking' });
+    }
+    
+    // Check booking status
+    if (booking.status !== 'Booked' && booking.status !== 'approved') {
+      return res.status(400).json({ 
+        message: `Cannot update a booking with status: ${booking.status}. Only confirmed bookings can be updated.` 
+      });
+    }
 
     const restaurant = booking.restaurant;
+    if (!restaurant) {
+      return res.status(404).json({ message: 'Restaurant information not found for this booking' });
+    }
     
     // Calculate tables needed for the updated booking
     const updatedTablesNeeded = Math.ceil(numPeople / restaurant.maxPeoplePerTable);
@@ -545,26 +714,28 @@ exports.updateBooking = async (req, res) => {
     const today = new Date();
     const bookingDate = new Date(date);
     const existingDate = new Date(booking.date);
-    const isNewDateToday = bookingDate.getDate() === today.getDate() && 
-                           bookingDate.getMonth() === today.getMonth() && 
-                           bookingDate.getFullYear() === today.getFullYear();
-    const wasOldDateToday = existingDate.getDate() === today.getDate() && 
-                           existingDate.getMonth() === today.getMonth() && 
-                           existingDate.getFullYear() === today.getFullYear();
+    
+    // Format dates for proper comparison (strip time component)
+    today.setHours(0, 0, 0, 0);
+    bookingDate.setHours(0, 0, 0, 0);
+    existingDate.setHours(0, 0, 0, 0);
+    
+    const isNewDateToday = bookingDate.getTime() === today.getTime();
     
     // If tables needed increase for today, check availability
     if (tablesDifference > 0 && isNewDateToday) {
       // Get today's bookings to check availability
-      const start = new Date(today); start.setHours(0, 0, 0, 0);
-      const end = new Date(today); end.setHours(23, 59, 59, 999);
+      const start = new Date(today);
+      const end = new Date(today);
+      end.setHours(23, 59, 59, 999);
       
       const bookingCounts = await Booking.aggregate([
         { 
           $match: { 
             restaurant: restaurant._id,
             date: { $gte: start, $lte: end },
-            status: 'Booked',
-            _id: { $ne: booking._id } // Exclude the current booking
+            status: { $in: ['Booked', 'approved'] }, // Check both status formats
+            _id: { $ne: mongoose.Types.ObjectId(bookingId) } // Exclude the current booking
           } 
         },
         {
@@ -577,7 +748,10 @@ exports.updateBooking = async (req, res) => {
                   "$requiredTables",
                   { 
                     $ceil: { 
-                      $divide: ["$numPeople", restaurant.maxPeoplePerTable] 
+                      $divide: [
+                        { $cond: [{ $gt: ["$numPeople", 0] }, "$numPeople", "$partySize"] }, 
+                        restaurant.maxPeoplePerTable
+                      ] 
                     } 
                   }
                 ] 
@@ -588,11 +762,12 @@ exports.updateBooking = async (req, res) => {
       ]);
 
       const tablesInUse = bookingCounts.length > 0 ? bookingCounts[0].tablesUsed : 0;
+      const availableTables = restaurant.availableTables - tablesInUse;
       
       // Check if enough tables are available
-      if (restaurant.availableTables - tablesInUse < updatedTablesNeeded) {
+      if (availableTables < updatedTablesNeeded) {
         return res.status(400).json({ 
-          message: `Cannot update booking. Need ${updatedTablesNeeded} tables, but only ${restaurant.availableTables - tablesInUse} available.` 
+          message: `Cannot update booking. Need ${updatedTablesNeeded} tables, but only ${availableTables} available.` 
         });
       }
     }
@@ -601,6 +776,7 @@ exports.updateBooking = async (req, res) => {
     booking.date = date;
     booking.time = time;
     booking.numPeople = numPeople;
+    booking.partySize = numPeople; // Update both field names for compatibility
     booking.requiredTables = updatedTablesNeeded;
     await booking.save();
 

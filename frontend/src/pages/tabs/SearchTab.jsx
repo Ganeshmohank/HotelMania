@@ -47,11 +47,11 @@ const SearchTab = ({
       name: prevSearch.name || '',
       date: prevSearch.date || todayStr,
       people: prevSearch.people || 2,
-      city: prevSearch.city || '',
+      city: '' || '', //prevSearch.city
       zip: prevSearch.zip || '',
       cuisine: prevSearch.cuisine || '',
       minRating: prevSearch.minRating || '',
-      time: prevSearch.time || '',
+      time: '' || '', //prevSearch.time 
       sortBy: prevSearch.sortBy || ''
     }));
   }, []);
@@ -205,7 +205,9 @@ const SearchTab = ({
           const data = await response.json();
           const city = data.address.city || data.address.town || data.address.village || '';
           const zip = data.address.postcode || '';
-          setSearch(prev => ({ ...prev, city, zip }));
+        //   setSearch(prev => ({ ...prev, city, zip }));
+        let c1 =''
+        setSearch(prev => ({ ...prev, c1, zip }));
         } catch (err) {
           console.error('Location fetch failed:', err);
         }
@@ -459,132 +461,157 @@ const SearchTab = ({
       
       {/* Review section that shows when a restaurant is selected */}
       {selectedRest && (
-        <section className="reviews-section" ref={reviewsRef}>
-          <div className="reviews-container">
-            <div className="reviews-header">
-              <div>
-                <h2>Reviews for {selectedRest.name}</h2>
-                <p className="reviews-count">{reviews.length} {reviews.length === 1 ? 'review' : 'reviews'}</p>
-              </div>
-              <button className="btn-close" onClick={dismissReviews} aria-label="Close reviews">
-                ✖
-              </button>
-            </div>
+        <section className="cust-review-section" ref={reviewsRef}>
+  <div className="cust-review-container">
+    <div className="cust-review-header">
+      <div className="cust-review-title">
+        <h2>{selectedRest.name}</h2>
+        <div className="cust-review-stats">
+          <span className="cust-review-count">
+            {reviews.length} {reviews.length === 1 ? 'review' : 'reviews'}
+          </span>
+        </div>
+      </div>
+      <button className="cust-review-close-btn" onClick={dismissReviews} aria-label="Close reviews">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18"></line>
+          <line x1="6" y1="6" x2="18" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+    
+    {reviews.length === 0 ? (
+      <div className="cust-review-empty">
+        <div className="cust-review-empty-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+          </svg>
+        </div>
+        <p>Be the first to share your experience at {selectedRest.name}!</p>
+      </div>
+    ) : (
+      <div className="cust-review-list-container">
+        <ul className="cust-review-list">
+          {reviews.map((review, index) => {
+            const ratingClass = review.rating <= 2 ? 'low' : review.rating === 3 ? 'medium' : 'high';
+            const isUserReview = review.user?._id === userId;
             
-            {reviews.length === 0 ? (
-              <div className="no-reviews">
-                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                </svg>
-                <p>Be the first to leave a review for {selectedRest.name}!</p>
-              </div>
-            ) : (
-              <ul className="reviews-list">
-                {reviews.map((review, index) => {
-                  const ratingClass = review.rating <= 2 ? 'low' : review.rating === 3 ? 'medium' : 'high';
-                  const isUserReview = review.user?._id === userId;
+            return (
+              <li key={index} className={`cust-review-item ${isUserReview ? 'cust-review-user' : ''}`}>
+                <div className="cust-review-top">
+                  <div className="cust-review-user-info">
+                    <div className={`cust-review-avatar cust-review-rating-${ratingClass}`}>
+                      {review.user?.name?.charAt(0) || 'U'}
+                    </div>
+                    <div className="cust-review-author">
+                      <span className="cust-review-name">{review.user?.name || 'Anonymous'}</span>
+                      <div className="cust-review-stars">
+                        {[...Array(5)].map((_, i) => (
+                          <span key={i} className={i < review.rating ? 'cust-review-star filled' : 'cust-review-star'}>
+                            ★
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
                   
-                  return (
-                    <li key={index} className={`review-item ${ratingClass} ${isUserReview ? 'user-review' : ''}`}>
-                      <div className="review-avatar">
-                        {review.user?.name?.charAt(0) || 'U'}
-                      </div>
-                      
-                      <div className="review-content">
-                        <div className="review-header">
-                          <div className="review-meta">
-                            <span className="reviewer-name">{review.user?.name || 'Anonymous'}</span>
-                            <div className="rating-stars">
-                              {[...Array(5)].map((_, i) => (
-                                <span key={i} className={i < review.rating ? 'star filled' : 'star'}>
-                                  ★
-                                </span>
-                              ))}
-                            </div>
-                          </div>
-                          
-                          {isUserReview && (
-                            <div className="review-actions">
-                              <button 
-                                className="btn-edit" 
-                                onClick={() => {
-                                  setNewReview({ rating: review.rating, comment: review.comment });
-                                  setEditingReviewId(review._id);
-                                }}
-                              >
-                                Edit
-                              </button>
-                              <button 
-                                className="btn-delete" 
-                                onClick={() => deleteReview(selectedRest._id, review._id)}
-                              >
-                                Delete
-                              </button>
-                            </div>
-                          )}
-                        </div>
-                        
-                        <p className="review-text">
-                          {review.comment || 'No comment provided.'}
-                        </p>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-            )}
-            
-            <div className="add-review">
-              <h3>{editingReviewId ? 'Edit Your Review' : 'Add Your Review'}</h3>
-              
-              <div className="rating-selector">
-                <div className="rating-stars">
-                  {[...Array(5)].map((_, i) => (
-                    <button
-                      key={i}
-                      type="button"
-                      className={i < newReview.rating ? 'star filled' : 'star'}
-                      onClick={() => setNewReview(prev => ({ ...prev, rating: i + 1 }))}
-                      aria-label={`Rate ${i + 1} star${i !== 0 ? 's' : ''}`}
-                    >
-                      ★
-                    </button>
-                  ))}
+                  {isUserReview && (
+                    <div className="cust-review-actions">
+                      <button 
+                        className="cust-review-btn cust-review-edit" 
+                        onClick={() => {
+                          setNewReview({ rating: review.rating, comment: review.comment });
+                          setEditingReviewId(review._id);
+                        }}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                          <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                        </svg>
+                        <span>Edit</span>
+                      </button>
+                      <button 
+                        className="cust-review-btn cust-review-delete" 
+                        onClick={() => deleteReview(selectedRest._id, review._id)}
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <polyline points="3 6 5 6 21 6"></polyline>
+                          <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
+                        <span>Delete</span>
+                      </button>
+                    </div>
+                  )}
                 </div>
-                <span className="rating-text">{newReview.rating} Star{newReview.rating !== 1 ? 's' : ''}</span>
-              </div>
-              
-              <div className="review-form">
-                <textarea
-                  placeholder="Share your experience..."
-                  value={newReview.comment}
-                  onChange={e => setNewReview(prev => ({ ...prev, comment: e.target.value }))}
-                  rows={3}
-                ></textarea>
                 
-                <button 
-                  className="btn-submit-review" 
-                  onClick={() => submitReview(selectedRest._id)}
-                  disabled={!newReview.comment.trim()}
-                >
-                  {editingReviewId ? 'Update Review' : 'Submit Review'}
-                </button>
-                
-                {editingReviewId && (
-                  <button 
-                    className="btn-cancel" 
-                    onClick={() => {
-                      setEditingReviewId(null);
-                      setNewReview({ rating: 5, comment: '' });
-                    }}
-                  >
-                    Cancel
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-        </section>
+                <div className="cust-review-content">
+                  <p>{review.comment || 'No comment provided.'}</p>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    )}
+    
+    <div className="cust-review-form-container">
+      <h3 className="cust-review-form-title">
+        {editingReviewId ? 'Edit Your Review' : 'Share Your Experience'}
+      </h3>
+      
+      <div className="cust-review-rating">
+        <div className="cust-review-star-select">
+          {[...Array(5)].map((_, i) => (
+            <button
+              key={i}
+              type="button"
+              className={i < newReview.rating ? 'cust-review-star-btn active' : 'cust-review-star-btn'}
+              onClick={() => setNewReview(prev => ({ ...prev, rating: i + 1 }))}
+              aria-label={`Rate ${i + 1} star${i !== 0 ? 's' : ''}`}
+            >
+              ★
+            </button>
+          ))}
+        </div>
+        <span className="cust-review-rating-label">
+          {newReview.rating} Star{newReview.rating !== 1 ? 's' : ''}
+        </span>
+      </div>
+      
+      <div className="cust-review-form">
+        <textarea
+          className="cust-review-textarea"
+          placeholder="Share your thoughts about this restaurant..."
+          value={newReview.comment}
+          onChange={e => setNewReview(prev => ({ ...prev, comment: e.target.value }))}
+          rows={4}
+        ></textarea>
+        
+        <div className="cust-review-form-actions">
+          {editingReviewId && (
+            <button 
+              className="cust-review-btn cust-review-cancel" 
+              onClick={() => {
+                setEditingReviewId(null);
+                setNewReview({ rating: 5, comment: '' });
+              }}
+            >
+              Cancel
+            </button>
+          )}
+          
+          <button 
+            className={`cust-review-btn cust-review-submit ${!newReview.comment.trim() ? 'disabled' : ''}`}
+            onClick={() => submitReview(selectedRest._id)}
+            disabled={!newReview.comment.trim()}
+          >
+            {editingReviewId ? 'Update Review' : 'Submit Review'}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
       )}
     </div>
   );

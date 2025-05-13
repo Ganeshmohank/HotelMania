@@ -362,7 +362,6 @@ const AdminDashboard = () => {
                         <th>Customer</th>
                         <th>Date</th>
                         <th>Time</th>
-                        <th>People</th>
                         <th>Tables</th>
                         <th>Status</th>
                       </tr>
@@ -374,11 +373,13 @@ const AdminDashboard = () => {
                           <td>{booking.user?.name || 'Unknown'}</td>
                           <td>{new Date(booking.date).toLocaleDateString()}</td>
                           <td>{booking.time}</td>
-                          <td>{booking.numPeople}</td>
                           <td>{booking.requiredTables || 1}</td>
-                          <td className={booking.status === 'Booked' ? 'status-active' : 'status-cancelled'}>
-                            {booking.status}
-                          </td>
+                          <td className={booking.status === 'approved' ? 'status-active' : 'status-cancelled'}>
+                        {(booking.status=='approved')?"Booked":
+                         booking.status=='pending' ?"Pending" :
+                         booking.status=='rejected' ? "Rejected":
+                         'Cancelled'}
+                      </td>
                         </tr>
                       ))}
                     </tbody>
@@ -408,7 +409,6 @@ const AdminDashboard = () => {
                     <th>Customer</th>
                     <th>Date</th>
                     <th>Time</th>
-                    <th>People</th>
                     <th>Tables</th>
                     <th>Status</th>
                     <th>Created</th>
@@ -423,10 +423,12 @@ const AdminDashboard = () => {
                       <td>{booking.user?.name || 'Unknown'}</td>
                       <td>{new Date(booking.date).toLocaleDateString()}</td>
                       <td>{booking.time}</td>
-                      <td>{booking.numPeople}</td>
                       <td>{booking.requiredTables || 1}</td>
-                      <td className={booking.status === 'Booked' ? 'status-active' : 'status-cancelled'}>
-                        {booking.status}
+                      <td className={booking.status === 'approved' ? 'status-active' : 'status-cancelled'}>
+                        {(booking.status=='approved')?"Booked":
+                         booking.status=='pending' ?"Pending" :
+                         booking.status=='rejected' ? "Rejected":
+                         'Cancelled'}
                       </td>
                       <td>{new Date(booking.createdAt).toLocaleString()}</td>
                       <td>{new Date(booking.updatedAt).toLocaleString()}</td>

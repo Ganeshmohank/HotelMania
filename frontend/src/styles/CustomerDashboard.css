@@ -790,11 +790,13 @@
 }
 
 .form-group input {
-  width: 100%;
+  width: 50%;
   padding: 0.75rem;
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
   font-size: 1rem;
+  background: white;
+  color: black;
 }
 
 .form-group input:focus {
@@ -1784,3 +1786,4 @@
     flex-direction: column;
   }
 }
+

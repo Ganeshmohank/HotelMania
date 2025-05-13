@@ -199,7 +199,7 @@ const styles = {
     transition: 'all 0.2s ease',
     outline: 'none',
     boxSizing: 'border-box',
-    background: 'white !important',
+    background: 'white',
     color: 'black'
   },
   forgotLink: {
