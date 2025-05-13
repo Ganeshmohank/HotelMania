@@ -1,0 +1,561 @@
+/* BookingsTab.css - Separate styling for BookingsTab component */
+
+.booking-tab-section {
+    min-height: 50vh;
+    width: 100%;
+  }
+  
+  /* Header & Filters */
+  .booking-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .booking-header h2 {
+    font-size: 1.75rem;
+    margin: 0;
+    color: #1f2937;
+    font-weight: 700;
+  }
+  
+  .booking-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .booking-filter {
+    display: flex;
+    background: #f3f4f6;
+    border-radius: 8px;
+    padding: 0.25rem;
+    overflow: hidden;
+  }
+  
+  .filter-btn {
+    background: transparent;
+    border: none;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #6b7280;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+  }
+  
+  .filter-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+  
+  .filter-btn.active {
+    background: white;
+    color: #3b82f6;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .new-booking-btn {
+    background: #3b82f6;
+    color: white;
+    padding: 0.5rem 1.25rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .new-booking-btn:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+  }
+  
+  /* Booking Cards */
+  .booking-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  
+  .booking-card {
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    transition: all 0.3s ease;
+    border: 1px solid #e5e7eb;
+    height: 100%;
+  }
+  
+  .booking-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+    border-color: #d1d5db;
+  }
+  
+  .booking-card-image {
+    position: relative;
+    height: 180px;
+    overflow: hidden;
+  }
+  
+  .booking-card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .booking-card:hover .booking-card-image img {
+    transform: scale(1.05);
+  }
+  
+  .booking-countdown {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    backdrop-filter: blur(4px);
+  }
+  
+  .booking-card-content {
+    padding: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+  
+  .booking-restaurant-info {
+    margin-bottom: 1rem;
+  }
+  
+  .booking-restaurant-info h3 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.25rem;
+    color: #1f2937;
+    font-weight: 700;
+  }
+  
+  .restaurant-cuisine {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #6b7280;
+  }
+  
+  .booking-date-time {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid #e5e7eb;
+  }
+  
+  .booking-date, .booking-time {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .date-icon, .time-icon {
+    font-size: 1.25rem;
+  }
+  
+  .date-text, .time-text {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #1f2937;
+  }
+  
+  .booking-details {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+  }
+  
+  .booking-people, .booking-tables, .booking-location {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-width: 140px;
+  }
+  
+  .detail-icon {
+    font-size: 1.15rem;
+  }
+  
+  .detail-text {
+    font-size: 0.95rem;
+    color: #4b5563;
+  }
+  
+  .booking-special-requests {
+    background: #f9fafb;
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 1.25rem;
+  }
+  
+  .booking-special-requests h4 {
+    margin: 0 0 0.5rem 0;
+    font-size: 0.95rem;
+    color: #4b5563;
+  }
+  
+  .booking-special-requests p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #6b7280;
+    font-style: italic;
+  }
+  
+  .booking-confirmation {
+    display: flex;
+    flex-direction: column;
+    background: #f0f9ff;
+    padding: 0.75rem;
+    border-radius: 8px;
+    margin-bottom: 1.25rem;
+    border: 1px solid #bae6fd;
+  }
+  
+  .confirmation-label {
+    font-size: 0.8rem;
+    color: #0369a1;
+    margin-bottom: 0.25rem;
+  }
+  
+  .confirmation-code {
+    font-family: monospace;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #0284c7;
+    letter-spacing: 1px;
+  }
+  
+  .booking-card-buttons {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: auto;
+  }
+  
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 0.95rem;
+    border: none;
+    transition: all 0.2s ease;
+  }
+  
+  .edit-btn {
+    background: #f8fafc;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    flex: 1;
+  }
+  
+  .edit-btn:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+  }
+  
+  .cancel-btn {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    flex: 1;
+  }
+  
+  .cancel-btn:hover {
+    background: #fecaca;
+    border-color: #fca5a5;
+  }
+  
+  /* Empty State */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    background: #f9fafb;
+    border-radius: 16px;
+    text-align: center;
+    border: 2px dashed #e5e7eb;
+  }
+  
+  .empty-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    color: #9ca3af;
+  }
+  
+  .empty-state h3 {
+    font-size: 1.5rem;
+    margin: 0 0 0.75rem 0;
+    color: #1f2937;
+  }
+  
+  .empty-state p {
+    font-size: 1rem;
+    color: #6b7280;
+    margin: 0 0 1.5rem 0;
+    max-width: 400px;
+  }
+  
+  .find-restaurants-btn {
+    background: #3b82f6;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+  }
+  
+  .find-restaurants-btn:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+  }
+  
+  /* Booking Tips */
+  .booking-tips {
+    background: #f3f4f6;
+    border-radius: 16px;
+    padding: 1.5rem;
+    margin-top: 2rem;
+  }
+  
+  .booking-tips h3 {
+    margin: 0 0 1rem 0;
+    font-size: 1.25rem;
+    color: #1f2937;
+    font-weight: 600;
+  }
+  
+  .booking-tips ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+  }
+  
+  .booking-tips li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+  
+  .tip-icon {
+    font-size: 1.25rem;
+    color: #6b7280;
+  }
+  
+  .tip-text {
+    font-size: 0.95rem;
+    color: #4b5563;
+    line-height: 1.5;
+  }
+  
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .booking-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .booking-actions {
+      width: 100%;
+      justify-content: space-between;
+    }
+    
+    .booking-cards {
+      grid-template-columns: 1fr;
+    }
+    
+    .booking-tips ul {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .booking-date-time {
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    
+    .booking-card-buttons {
+      flex-direction: column;
+    }
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  
+  .booking-card {
+    animation: fadeIn 0.5s ease-out;
+  }
+  
+  .booking-card:nth-child(2) {
+    animation-delay: 0.1s;
+  }
+  
+  .booking-card:nth-child(3) {
+    animation-delay: 0.2s;
+  }
+  
+  .booking-card:nth-child(4) {
+    animation-delay: 0.3s;
+  }
+  
+  /* Dark Mode Support (Optional) */
+  /* @media (prefers-color-scheme: dark) {
+    .booking-tab-section {
+      background: #1a1a1a;
+      color: #f0f0f0;
+    }
+    
+    .booking-header h2 {
+      color: #f0f0f0;
+    }
+    
+    .booking-filter {
+      background: #2d2d2d;
+    }
+    
+    .filter-btn {
+      color: #d1d5db;
+    }
+    
+    .filter-btn.active {
+      background: #1f2937;
+      color: #60a5fa;
+    }
+    
+    .booking-card {
+      background: #2d2d2d;
+      border-color: #444;
+    }
+    
+    .booking-restaurant-info h3 {
+      color: #f0f0f0;
+    }
+    
+    .restaurant-cuisine {
+      color: #9ca3af;
+    }
+    
+    .booking-date-time {
+      border-color: #444;
+    }
+    
+    .date-text, .time-text {
+      color: #e5e7eb;
+    }
+    
+    .detail-text {
+      color: #d1d5db;
+    }
+    
+    .booking-special-requests {
+      background: #1f2937;
+    }
+    
+    .booking-special-requests h4 {
+      color: #e5e7eb;
+    }
+    
+    .booking-special-requests p {
+      color: #9ca3af;
+    }
+    
+    .booking-confirmation {
+      background: #172554;
+      border-color: #1e40af;
+    }
+    
+    .confirmation-label {
+      color: #93c5fd;
+    }
+    
+    .confirmation-code {
+      color: #60a5fa;
+    }
+    
+    .edit-btn {
+      background: #334155;
+      color: #e2e8f0;
+      border-color: #475569;
+    }
+    
+    .edit-btn:hover {
+      background: #475569;
+      border-color: #64748b;
+    }
+    
+    .cancel-btn {
+      background: #7f1d1d;
+      color: #fecaca;
+      border-color: #991b1b;
+    }
+    
+    .cancel-btn:hover {
+      background: #991b1b;
+      border-color: #b91c1c;
+    }
+    
+    .empty-state {
+      background: #2d2d2d;
+      border-color: #444;
+    }
+    
+    .empty-state h3 {
+      color: #f0f0f0;
+    }
+    
+    .empty-state p {
+      color: #9ca3af;
+    }
+    
+    .booking-tips {
+      background: #1f2937;
+    }
+    
+    .booking-tips h3 {
+      color: #f0f0f0;
+    }
+    
+    .tip-icon {
+      color: #9ca3af;
+    }
+    
+    .tip-text {
+      color: #d1d5db;
+    }
+  } */

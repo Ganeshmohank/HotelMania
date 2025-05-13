@@ -1,0 +1,309 @@
+/* favorites.css - Elegant styling for the Favorites Tab */
+
+/* Main section styling */
+.favorites-section {
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Header styling */
+  .favorites-header {
+    margin-bottom: 2rem;
+    text-align: center;
+    position: relative;
+  }
+  
+  .favorites-header h2 {
+    font-size: 2rem;
+    font-weight: 600;
+    color: #2C7A7B;
+    margin-bottom: 0.5rem;
+  }
+  
+  .favorites-subtitle {
+    font-size: 1rem;
+    color: #718096;
+    font-weight: 400;
+  }
+  
+  .favorites-header::after {
+    content: '';
+    display: block;
+    width: 50px;
+    height: 3px;
+    background-color: #2C7A7B;
+    margin: 1rem auto 0;
+    border-radius: 2px;
+  }
+  
+  /* Empty state styling */
+  .empty-favorites {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 1rem;
+    background-color: #f7fafc;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  }
+  
+  .empty-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.7;
+  }
+  
+  .empty-favorites h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #4A5568;
+    margin-bottom: 0.5rem;
+  }
+  
+  .empty-favorites p {
+    color: #718096;
+    margin-bottom: 1.5rem;
+    max-width: 300px;
+  }
+  
+  .explore-btn {
+    padding: 0.75rem 1.5rem;
+    background-color: #2C7A7B;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    box-shadow: 0 2px 4px rgba(44, 122, 123, 0.2);
+  }
+  
+  .explore-btn:hover {
+    background-color: #2a6f70;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px rgba(44, 122, 123, 0.25);
+  }
+  
+  /* Grid layout for cards */
+  .favorites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  /* Restaurant Card Styling */
+  .favorite-card {
+    display: flex;
+    flex-direction: column;
+    border-radius: 12px;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: all 0.3s ease;
+    height: 100%;
+  }
+  
+  .favorite-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+  }
+  
+  /* Image container styling */
+  .card-image {
+    position: relative;
+    overflow: hidden;
+    height: 200px;
+    width: 100%;
+  }
+  
+  .card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  
+  .favorite-card:hover .card-image img {
+    transform: scale(1.05);
+  }
+  
+  /* Overlay for image with favorite button */
+  .card-overlay {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 0.75rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .favorite-btn {
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    transition: all 0.2s ease;
+  }
+  
+  .favorite-btn:hover {
+    transform: scale(1.1);
+    background: white;
+  }
+  
+  .favorite-btn span {
+    font-size: 1.25rem;
+  }
+  
+  /* Content area styling */
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    padding: 1.25rem;
+    flex-grow: 1;
+  }
+  
+  .restaurant-name {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #2D3748;
+    margin-bottom: 0.5rem;
+    line-height: 1.3;
+  }
+  
+  .restaurant-details {
+    display: flex;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .restaurant-cuisine {
+    color: #2C7A7B;
+    font-weight: 500;
+  }
+  
+  .restaurant-cuisine::after {
+    content: '•';
+    margin: 0 0.5rem;
+    color: #CBD5E0;
+  }
+  
+  .restaurant-location {
+    color: #718096;
+  }
+  
+  /* Stats display */
+  .restaurant-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #E2E8F0;
+  }
+  
+  .stat {
+    display: flex;
+    align-items: center;
+  }
+  
+  .stat-label {
+    width: 60px;
+    font-size: 0.875rem;
+    color: #718096;
+  }
+  
+  .stat-value {
+    font-size: 0.875rem;
+    color: #4A5568;
+    font-weight: 500;
+  }
+  
+  .review-count {
+    margin-left: 0.25rem;
+    color: #A0AEC0;
+    font-size: 0.8rem;
+  }
+  
+  /* Action buttons */
+  .card-actions {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: auto;
+  }
+  
+  .book-btn, .reviews-btn {
+    flex: 1;
+    padding: 0.75rem 0;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: none;
+  }
+  
+  .book-btn {
+    background-color: #2C7A7B;
+    color: white;
+    box-shadow: 0 2px 4px rgba(44, 122, 123, 0.2);
+  }
+  
+  .book-btn:hover {
+    background-color: #2a6f70;
+  }
+  
+  .reviews-btn {
+    background-color: #EDF2F7;
+    color: #4A5568;
+  }
+  
+  .reviews-btn:hover {
+    background-color: #E2E8F0;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .favorites-grid {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .favorites-header h2 {
+      font-size: 1.75rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .favorites-grid {
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+    
+    .card-actions {
+      flex-direction: column;
+    }
+    
+    .favorites-section {
+      padding: 1rem;
+    }
+  }
+  
+  /* Animation keyframes */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  
+  .favorites-grid {
+    animation: fadeIn 0.5s ease-out;
+  }

@@ -1,0 +1,619 @@
+/* ReviewsTab.css - Separate styling for ReviewsTab component */
+
+/* Main container */
+.reviews-tab-section {
+    padding: 1.5rem;
+    width: 100%;
+  }
+  
+  /* Header styling */
+  .reviews-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+  }
+  
+  .reviews-title {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .reviews-title h2 {
+    font-size: 1.75rem;
+    margin: 0 0 0.25rem 0;
+    color: #1f2937;
+    font-weight: 700;
+  }
+  
+  .reviews-count {
+    font-size: 0.95rem;
+    color: #6b7280;
+  }
+  
+  .reviews-stats {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .stat-card {
+    padding: 0.25rem 0.25rem;
+    background: #f9fafb;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-width: 100px;
+    border: 1px solid #e5e7eb;
+  }
+  
+  .stat-card.highlight {
+    background: #eff6ff;
+    border-color: #bfdbfe;
+  }
+  
+  .stat-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    display: flex;
+    align-items: center;
+  }
+  
+  .stat-star {
+    color: #f59e0b;
+    margin-left: 0.25rem;
+    font-size: 0.9em;
+  }
+  
+  .stat-label {
+    font-size: 0.85rem;
+    color: #6b7280;
+    margin-top: 0.25rem;
+  }
+  
+  /* Controls section */
+  .reviews-controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  
+  .rating-filter {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  
+  .filter-label {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #6b7280;
+  }
+  
+  .rating-buttons {
+    display: flex;
+    gap: 0.5rem;
+    background: #f3f4f6;
+    padding: 0.3rem;
+    border-radius: 10px;
+    flex-wrap: wrap;
+  }
+  
+  .rating-btn {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #6b7280;
+    font-weight: 500;
+    transition: all 0.2s ease;
+  }
+  
+  .rating-btn:hover {
+    background: rgba(0, 0, 0, 0.05);
+  }
+  
+  .rating-btn.active {
+    background: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    color: #2563eb;
+  }
+  
+  .rating-count {
+    font-size: 0.85rem;
+    color: #9ca3af;
+    margin-left: 0.25rem;
+  }
+  
+  .sort-control {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+  
+  .sort-control label {
+    font-size: 0.95rem;
+    color: #6b7280;
+    font-weight: 500;
+  }
+  
+  .sort-select {
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    background: white;
+    color: #4b5563;
+    font-size: 0.95rem;
+    min-width: 140px;
+  }
+  
+  /* Empty state */
+  .empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    background: #f9fafb;
+    border-radius: 16px;
+    text-align: center;
+    border: 2px dashed #e5e7eb;
+  }
+  
+  .empty-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1.5rem;
+    color: #9ca3af;
+  }
+  
+  .empty-state h3 {
+    font-size: 1.5rem;
+    margin: 0 0 0.75rem 0;
+    color: #1f2937;
+  }
+  
+  .empty-state p {
+    font-size: 1rem;
+    color: #6b7280;
+    margin: 0 0 1.5rem 0;
+    max-width: 400px;
+  }
+  
+  /* Review cards */
+  .reviews-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .review-card {
+    border-radius: 12px;
+    background: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    border: 1px solid #e5e7eb;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .review-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Rating color indicators */
+  .review-card.rating-5 {
+    border-top: 4px solid #10b981;
+  }
+  
+  .review-card.rating-4 {
+    border-top: 4px solid #3b82f6;
+  }
+  
+  .review-card.rating-3 {
+    border-top: 4px solid #f59e0b;
+  }
+  
+  .review-card.rating-2 {
+    border-top: 4px solid #f97316;
+  }
+  
+  .review-card.rating-1 {
+    border-top: 4px solid #ef4444;
+  }
+  
+  .review-card-header {
+    padding: 1.25rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  
+  .review-restaurant-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .restaurant-thumbnail {
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+  }
+  
+  .restaurant-details h3 {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #1f2937;
+  }
+  
+  .restaurant-cuisine {
+    margin: 0;
+    font-size: 0.85rem;
+    color: #6b7280;
+  }
+  
+  .rating-display {
+    display: flex;
+    align-items: center;
+  }
+  
+  .rating-badge-lg {
+    display: flex;
+    align-items: center;
+    background: #f3f4f6;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+  }
+  
+  .rating-badge-lg .star-symbol {
+    margin-left: 0.2rem;
+    color: #f59e0b;
+    font-size: 0.9em;
+  }
+  
+  .review-card-body {
+    padding: 1.25rem;
+    border-bottom: 1px solid #f3f4f6;
+  }
+  
+  .review-content {
+    margin-bottom: 1rem;
+  }
+  
+  .star-rating-display {
+    margin-bottom: 0.75rem;
+  }
+  
+  .star {
+    font-size: 1.25rem;
+    margin-right: 0.2rem;
+  }
+  
+  .star.filled {
+    color: #f59e0b;
+  }
+  
+  .star.empty {
+    color: #d1d5db;
+  }
+  
+  .review-comment {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #4b5563;
+    line-height: 1.6;
+    max-height: 80px;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+  }
+  
+  .review-comment.expanded {
+    max-height: 500px;
+  }
+  
+  .expand-btn {
+    background: none;
+    border: none;
+    color: #3b82f6;
+    font-size: 0.9rem;
+    padding: 0.5rem 0;
+    cursor: pointer;
+    font-weight: 500;
+  }
+  
+  .expand-btn:hover {
+    text-decoration: underline;
+  }
+  
+  .review-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.85rem;
+    color: #6b7280;
+  }
+  
+  .review-date-full {
+    font-weight: 500;
+  }
+  
+  .review-date-relative {
+    font-style: italic;
+  }
+  
+  .review-card-actions {
+    padding: 1rem 1.25rem;
+    display: flex;
+    gap: 0.75rem;
+  }
+  
+  .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.25rem;
+    border-radius: 8px;
+    font-weight: 500;
+    cursor: pointer;
+    font-size: 0.95rem;
+    border: none;
+    transition: all 0.2s ease;
+  }
+  
+  .btn.primary {
+    background: #3b82f6;
+    color: white;
+  }
+  
+  .btn.primary:hover {
+    /* background: #2563eb; */
+  }
+  
+  .btn.secondary {
+    background: #f3f4f6;
+    color: #4b5563;
+  }
+  
+  .btn.secondary:hover {
+    background: #e5e7eb;
+  }
+  
+  .edit-btn {
+    background: #f8fafc;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    flex: 1;
+  }
+  
+  .edit-btn:hover {
+    background: #f1f5f9;
+    border-color: #cbd5e1;
+  }
+  
+  .delete-btn {
+    background: #fee2e2;
+    color: #b91c1c;
+    border: 1px solid #fecaca;
+    flex: 1;
+  }
+  
+  .delete-btn:hover {
+    background: #fecaca;
+    border-color: #fca5a5;
+  }
+  
+  /* Edit form */
+  .review-edit-form {
+    padding: 1.5rem;
+  }
+  
+  .edit-form-title {
+    margin: 0 0 0.25rem 0;
+    font-size: 1.2rem;
+    color: #1f2937;
+  }
+  
+  .edit-restaurant-name {
+    margin: 0 0 1.25rem 0;
+    font-size: 1rem;
+    color: #6b7280;
+    font-weight: 500;
+  }
+  
+  .edit-rating-field,
+  .edit-comment-field {
+    margin-bottom: 1.25rem;
+  }
+  
+  .edit-rating-field label,
+  .edit-comment-field label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: #4b5563;
+  }
+  
+  .star-rating-input {
+    display: flex;
+    gap: 0.25rem;
+  }
+  
+  .star-btn {
+    background: none;
+    border: none;
+    font-size: 1.75rem;
+    color: #d1d5db;
+    cursor: pointer;
+    padding: 0;
+    transition: color 0.2s ease;
+  }
+  
+  .star-btn:hover {
+    color: #f59e0b;
+  }
+  
+  .star-btn.selected {
+    color: #f59e0b;
+  }
+  
+  .edit-comment-field textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    resize: vertical;
+    min-height: 120px;
+  }
+  
+  .edit-comment-field textarea:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  }
+  
+  .form-actions {
+    display: flex;
+    gap: 0.75rem;
+  }
+  
+  /* Animation */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .review-card {
+    animation: fadeIn 0.3s ease-out;
+  }
+  
+  /* Staggered animation for multiple cards */
+  .review-card:nth-child(1) { animation-delay: 0.05s; }
+  .review-card:nth-child(2) { animation-delay: 0.1s; }
+  .review-card:nth-child(3) { animation-delay: 0.15s; }
+  .review-card:nth-child(4) { animation-delay: 0.2s; }
+  .review-card:nth-child(5) { animation-delay: 0.25s; }
+  .review-card:nth-child(6) { animation-delay: 0.3s; }
+  
+  /* Focus styles for accessibility */
+  .btn:focus,
+  .rating-btn:focus,
+  .sort-select:focus,
+  .star-btn:focus,
+  .expand-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
+  }
+  
+  /* Custom button styles */
+  .btn svg {
+    width: 16px;
+    height: 16px;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .reviews-header {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .reviews-controls {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .reviews-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .rating-buttons {
+      width: 100%;
+      justify-content: space-between;
+    }
+    
+    .rating-btn {
+      padding: 0.5rem 0.75rem;
+    }
+    
+    .sort-control {
+      width: 100%;
+      justify-content: space-between;
+    }
+    
+    .sort-select {
+      flex: 1;
+    }
+    
+    .form-actions {
+      flex-direction: column;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .reviews-tab-section {
+      padding: 1rem;
+    }
+    
+    .review-card-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1rem;
+    }
+    
+    .rating-display {
+      width: 100%;
+    }
+    
+    .review-restaurant-info {
+      width: 100%;
+    }
+    
+    .restaurant-thumbnail {
+      width: 50px;
+      height: 50px;
+    }
+    
+    .restaurant-details {
+      width: 100%;
+    }
+    
+    .review-meta {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.25rem;
+    }
+    
+    .review-card-actions {
+      flex-direction: column;
+    }
+    
+    .star-rating-input {
+      justify-content: space-between;
+      width: 100%;
+    }
+  }
